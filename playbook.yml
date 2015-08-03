@@ -1,0 +1,17 @@
+---
+
+########################################
+# Provision a linux box automatically. #
+########################################
+
+- hosts: all
+  remote_user: vagrant
+  sudo: yes
+
+  tasks:
+    - name: Update apt.
+      apt: update_cache=yes cache_valid_time=8400
+  
+  handlers:
+    - name: Restart apache.
+      service: name=apache2 state=restarted
