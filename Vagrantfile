@@ -6,10 +6,12 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  # General vagrant parameters
-  config.vm.box = "ubuntu/trusty64"
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.synced_folder "../data", "/var/www/html/"
+  # Create devbox with vagrant parameters
+  config.vm.define "devbox" do |devbox|
+    devbox.vm.box = "ubuntu/trusty64"
+    devbox.vm.network "forwarded_port", guest: 80, host: 8080
+    devbox.vm.synced_folder "../data", "/var/www/html/"
+  end
 
   # Virtualbox parameters
   config.vm.provider "virtualbox" do |vb|
