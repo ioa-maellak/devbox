@@ -9,9 +9,58 @@
   sudo: yes
 
   tasks:
-    - name: Update apt.
+    - name: Update apt
       apt: update_cache=yes cache_valid_time=8400
-  
+
+    - name: Include variables
+      include_vars: variables.yml
+      
+    - name: Create ~/bin directory
+      sudo: yes
+      sudo_user: vagrant
+      file:
+        path: "~/bin"
+        state: directory
+        owner: vagrant
+        group: vagrant
+        mode: 0775
+
+    - name: Install packages
+      apt: name={{ item }} state=present
+      with_items: packages
+      notify: restart apache
+
+    - name: Install composer
+      sudo: yes
+      sudo_user: vagrant
+      shell: "curl -sS https://getcomposer.org/installer | php"
+      args:
+        creates: "~/bin/composer"
+
+    - name: Move composer to home bin
+      sudo: yes
+      sudo_user: vagrant
+      shell: "mv composer.phar ~/bin/composer"
+      args:
+        creates: "~/bin/composer"
+
+    - name: Install drush
+      sudo: yes
+      sudo_user: vagrant
+      shell: "~/bin/composer global require drush/drush:dev-master"
+      args:
+        creates: "~/.composer/vendor/bin/drush"
+
+    - name: Update PATH in .profile
+      sudo: yes
+      sudo_user: vagrant
+      lineinfile:
+        dest: "~/.profile"
+        regexp: "^PATH"
+        line: "PATH=\"$HOME/.composer/vendor/bin:$HOME/bin:$PATH\""
+    
   handlers:
-    - name: Restart apache.
+    - name: restart apache
       service: name=apache2 state=restarted
+    - name: restart mysql
+      service: name=mysql state=restarted
