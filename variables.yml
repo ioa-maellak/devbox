@@ -1,3 +1,7 @@
+db_user: drupal_user
+db_pass: droop4l
+db_name: drupal
+
 packages:
   - apache2
   - apache2-mpm-prefork

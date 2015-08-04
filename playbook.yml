@@ -6,18 +6,16 @@
 
 - hosts: all
   remote_user: vagrant
-  sudo: yes
 
   tasks:
     - name: Update apt
+      sudo: yes
       apt: update_cache=yes cache_valid_time=8400
 
     - name: Include variables
       include_vars: variables.yml
       
     - name: Create ~/bin directory
-      sudo: yes
-      sudo_user: vagrant
       file:
         path: "~/bin"
         state: directory
@@ -26,41 +24,73 @@
         mode: 0775
 
     - name: Install packages
+      sudo: yes
       apt: name={{ item }} state=present
       with_items: packages
       notify: restart apache
 
     - name: Install composer
-      sudo: yes
-      sudo_user: vagrant
       shell: "curl -sS https://getcomposer.org/installer | php"
       args:
         creates: "~/bin/composer"
 
     - name: Move composer to home bin
-      sudo: yes
-      sudo_user: vagrant
       shell: "mv composer.phar ~/bin/composer"
       args:
         creates: "~/bin/composer"
 
     - name: Install drush
-      sudo: yes
       sudo_user: vagrant
       shell: "~/bin/composer global require drush/drush:dev-master"
       args:
         creates: "~/.composer/vendor/bin/drush"
 
     - name: Update PATH in .profile
-      sudo: yes
-      sudo_user: vagrant
       lineinfile:
         dest: "~/.profile"
-        regexp: "^PATH"
-        line: "PATH=\"$HOME/.composer/vendor/bin:$HOME/bin:$PATH\""
+        regexp: "PATH"
+        line: "\\tPATH=\"$HOME/.composer/vendor/bin:$HOME/bin:$PATH\""
+        backup: yes
+
+    - name: Create MySQL root password
+      command: /usr/bin/openssl rand -base64 16
+      register: mysql_root_pass
+
+    - debug: var=mysql_root_pass
+
+    - name: Update MySQL root password
+      mysql_user:
+        name: "root"
+        host: "{{ item }}"
+        password: "{{ mysql_root_pass.stdout }}"
+        state: present
+      with_items:
+          - 127.0.0.1
+          - ::1
+          - localhost
+      notify: restart mysql
+
+    - name: Move my.cnf on ~
+      template:
+        src: my.cnf.j2
+        dest: "~/.my.cnf"
+        mode: 0600
+
+    - name: Create database for drupal development
+      mysql_db: name="{{ db_name }}" state=present
+
+    - name: Add database users and privileges
+      mysql_user:
+        name: "{{ db_user }}"
+        host: localhost
+        password: "{{ db_pass }}"
+        priv: "{{ db_name }}.*:ALL,GRANT"
+        state: present
     
   handlers:
     - name: restart apache
+      sudo: yes
       service: name=apache2 state=restarted
     - name: restart mysql
+      sudo: yes
       service: name=mysql state=restarted
