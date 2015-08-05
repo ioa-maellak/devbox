@@ -83,5 +83,5 @@ learn more.
 ## Credits
 
 This code is developed and maintained by Tassos Koutlas for the Ioannina FOSS
-Unit of Excellence (ma-ellak). It is distributed with a EUPL v1.1 open source
+Unit of Excellence (ioa-maellak). It is distributed with a EUPL v1.1 open source
 software license.
