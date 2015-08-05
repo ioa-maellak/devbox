@@ -1,4 +1,4 @@
-# A virtual LAMP stack for local development of web projects
+# Devbox - Virtual LAMP server
 
 ## Prerequisites
 
