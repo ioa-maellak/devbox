@@ -40,8 +40,14 @@ Vagrant will first download ubuntu trusty (it takes a few minutes the first
 time) and then will provision the guest server automatically according to
 `playbook.yml`.
 
-To get additional vagrant options you can use the `vagrant` command on the
-directory that you cloned your repository.
+To login to the server use `vagrant ssh`.
+
+If you make changes to the `Vagrantfile` use `vagrant reload` to reload the
+configuration. To get additional vagrant options use the `vagrant` command in
+the directory that you cloned your repository.
+
+If you make changes to `playbook.yml` or any other ansible file reprovision the
+server using `vagrant provision`.
 
 The guest server will automotically be configured as a LAMP server utilising the
 following sotfware:
@@ -86,4 +92,4 @@ This code is developed and maintained by
 [Tassos Koutlas](https://github.com/tassoskoutlas) for the Ioannina FOSS Unit of
 Excellence (ioa-maellak). Pull requests are welcome.
 
-It is distributed with a EUPL v1.1 open source software license.
+The code is distributed with a EUPL v1.1 open source software license.
