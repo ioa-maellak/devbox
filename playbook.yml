@@ -56,7 +56,10 @@
       command: /usr/bin/openssl rand -base64 16
       register: mysql_root_pass
 
-    - debug: var=mysql_root_pass
+    # Uncomment the value below to see what is the root password that is
+    # generated. This password are written in ~/.my.cnf so you can have a
+    # look there after the provisioning of the server.
+    #- debug: var=mysql_root_pass
 
     - name: Update MySQL root password
       mysql_user:
