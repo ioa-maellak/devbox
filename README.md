@@ -26,7 +26,7 @@ system that is friendlier for developemnt (download
 ## Usage
 
 The best way to use this repository is to fork it and tailor it to your
-particular use case (see *configuration* below). Follow
+particular use case (see [configuration](#configuration) below). Follow
 [these instructions](https://help.github.com/articles/fork-a-repo/) to
 fork the repo and configure git to sync with it.
 
