@@ -10,7 +10,7 @@ need to have the following software intall on your machine:
   - [ansible](http://www.ansible.com/home)
   - [virtualbox](https://www.virtualbox.org/)
 
-On ubuntu hosts these packages are in official repositories and you can
+On Ubuntu hosts these packages are in official repositories and you can
 install them the usual way:
 
 ```
@@ -21,8 +21,8 @@ For Mac OS X hosts see how to install [homebrew](http://brew.sh/).
 
 For windows hosts the software is available and there are guides online for
 getting vagrant, ansible and virualbox working. Consider however using an operating
-system that is friendlier for developemnt (download
-[ubuntu](http://www.ubuntu.com/download/desktop)).
+system that is friendlier for developemnt (try
+[Ubuntu](http://www.ubuntu.com/download/desktop)).
 
 ## Usage
 
@@ -38,7 +38,7 @@ cd devbox
 vagrant up
 ```
 
-Vagrant will first download ubuntu trusty (it takes a few minutes the first
+Vagrant will first download Ubuntu trusty (it takes a few minutes the first
 time) and then will provision the virtual web server automatically according to
 `playbook.yml`.
 
@@ -96,6 +96,10 @@ following sotfware:
   - Composer
   - Drush 8
   - git
+
+To add more software packages you can append their names on the `packages` array
+in `variables.yml`. Ensure the correct name of the package you are after by
+[searching](http://packages.ubuntu.com/) for it on the Ubuntu repositories.
 
 ## Credits
 
