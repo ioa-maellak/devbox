@@ -1,12 +1,24 @@
+###################################
+# Server configuration variables. #
+###################################
+
 server_admin: admin@example.com
-  
+
+# Domain settings
+#
+# Append to the following array to add new web apps
 domains:
   - { domain: "mynewapp.local", docroot: "/var/www/html/mynewapp" }
 
+# Database settings
 db_user: drupal_user
 db_pass: droop4l
 db_name: drupal
 
+# Software settings
+#
+# Append to the following array to add new software packages
+# to the server.
 packages:
   - apache2
   - apache2-mpm-prefork
