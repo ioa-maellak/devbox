@@ -29,6 +29,40 @@
       with_items: packages
       notify: restart apache
 
+    - name: Enable mod_rewrite
+      sudo: yes
+      apache2_module: name=rewrite state=present
+      notify: restart apache
+
+    # - name: Create docroots
+    #   sudo: yes
+    #   file:
+    #     path: "{{ item.docroot }}"
+    #     owner: www-data
+    #     group: www-data
+    #     mode: 0775
+    #     state: directory
+    #   with_items: domains
+
+    - name: Create vhosts
+      sudo: yes
+      template:
+        src: "generic.vhost.j2"
+        dest: "/etc/apache2/sites-available/{{ item.domain }}.conf"
+        owner: root
+        group: root
+        mode: 0644
+      with_items: domains
+      notify: restart apache
+
+    - name: Enable vhosts
+      sudo: yes
+      command: a2ensite {{ item.domain }}
+      args:
+        creates: "/etc/apache2/sites-enabled/{{ item.domain }}.conf"
+      with_items: domains
+      notify: restart apache
+      
     - name: Install composer
       shell: "curl -sS https://getcomposer.org/installer | php"
       args:
@@ -56,7 +90,10 @@
       command: /usr/bin/openssl rand -base64 16
       register: mysql_root_pass
 
-    - debug: var=mysql_root_pass
+    # Uncomment the value below to see what is the root password that is
+    # generated. This password are written in ~/.my.cnf so you can have a
+    # look there after the provisioning of the server.
+    #- debug: var=mysql_root_pass
 
     - name: Update MySQL root password
       mysql_user:

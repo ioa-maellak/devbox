@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "devbox" do |devbox|
     devbox.vm.box = "ubuntu/trusty64"
     devbox.vm.network "forwarded_port", guest: 80, host: 8080
-    devbox.vm.synced_folder "../data", "/var/www/html/"
+    devbox.vm.synced_folder "../mynewapp", "/var/www/html/mynewapp"
   end
 
   # Virtualbox parameters

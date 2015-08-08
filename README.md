@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-This code provides a guest devevelopment box (ubuntu/trusty64) on your local
+This code provides a virtual devevelopment box (ubuntu/trusty64) on your local
 machine automatically configured as a LAMP server. To use the code provided you
 need to have the following software intall on your machine:
 
@@ -12,6 +12,7 @@ need to have the following software intall on your machine:
 
 On ubuntu hosts these packages are in official repositories and you can
 install them the usual way:
+
 ```
 sudo apt-get install vagrant ansible virtualbox
 ```
@@ -31,23 +32,60 @@ particular use case (see [configuration](#configuration) below). Follow
 fork the repo and configure git to sync with it.
 
 To create the guest server and automatically configure it do:
+
 ```
-cd dev-box
+cd devbox
 vagrant up
 ```
 
 Vagrant will first download ubuntu trusty (it takes a few minutes the first
-time) and then will provision the guest server automatically according to
+time) and then will provision the virtual web server automatically according to
 `playbook.yml`.
 
-To login to the server use `vagrant ssh`.
+What you get at the end of this process is:
+  - a virtual web server and database server that can host your web apps,
+  - a default web app configured to be accessed from your local browser at
+  `http://mynewapp.local:8080`,
+  - a synced folder between your local filesystem and the virtual server to host
+  your web app files,
+  - an environment that can be extended to accomodate more web apps, databases
+  and code repositories.
 
-If you make changes to the `Vagrantfile` use `vagrant reload` to reload the
-configuration. To get additional vagrant options use the `vagrant` command in
-the directory that you cloned your repository.
+You will also need to let you local machine know which ip is associated with the
+`mynewapp.local` domain. To do that add the following line on your `/etc/hosts`
+file ([learn more about overriding DNS with /etc/hosts](http://bencane.com/2013/10/29/managing-dns-locally-with-etchosts/)):
 
-If you make changes to `playbook.yml` or any other ansible file reprovision the
-server using `vagrant provision`.
+```
+127.0.0.1    mynewapp.local
+```
+
+To login to the virtual web server use:
+
+```
+vagrant ssh
+```
+
+The following section explores how the virtual web server works and how more
+than one web app can be setup and served by it.
+
+## Configuration
+
+To add another web app to the virtual servers you will need to:
+  1. edit the `Vagrantfile` and add new synced folder,
+  2. add the domain and docroot of the web app in `variables.yml`
+  3. reload the vagrant configuration with `vagrant reload`,
+  4. provision the server again so that virtual hosts are created,
+  5. edit `/etc/hosts` on your local machine and add the new web app domain on
+     `127.0.0.1`
+
+Have a look on `generic.vhost.j2` for exact implementation details for the
+apache configuration of web app docroots.
+
+Ansible uses the YAML configuration language. Please take a look at
+[YAML documentation](http://www.yaml.org/spec/1.2/spec.html) if you want to
+learn more.
+
+## Guest server packages
 
 The guest server will automotically be configured as a LAMP server utilising the
 following sotfware:
@@ -59,37 +97,10 @@ following sotfware:
   - Drush 8
   - git
 
-## Configuration
-
-### Vagrant
-
-The guest server links back to your local machine in two ways:
-
-  - it forwards guest port `80` to host port `8080` of localhost. That means
-    that you can visit the guest webserver by visiting `http://localhost:8080`
-    on your browser,
-  - it syncs a guest directory with a local directory so you can edit files in
-    your local directory and automatically have the files changed on the guest
-    server directory. If you have cloned the repository in `~/dev-box` then
-    `~/data` is the directory in sync with server's `/var/www/html`.
-
-These configuration options are set on `Vagrantfile` and can be changed
-according to a particular use case.
-
-### Ansible
-
-Once the sercer is provisioned software is installed and databases are
-created. You can control that behaviour by changing the values of the variables
-that are included in `variables.yml` which are read by Ansible.
-
-Ansible uses the YAML configuration language. Please take a look at
-[YAML documentation](http://www.yaml.org/spec/1.2/spec.html) if you want to
-learn more.
-
 ## Credits
 
 This code is developed and maintained by
 [Tassos Koutlas](https://github.com/tassoskoutlas) for the Ioannina FOSS Unit of
-Excellence (ioa-maellak). Pull requests are welcome.
+Excellence ([ioa-maellak](https://github.com/ioa-maellak/)). Pull requests are welcome.
 
 The code is distributed with a EUPL v1.1 open source software license.
