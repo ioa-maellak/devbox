@@ -36,4 +36,6 @@ packages:
   - libapache2-mod-auth-mysql
   - php5-mysql
   - python-mysqldb
+  - git
+  - tmux
   
