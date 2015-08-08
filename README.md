@@ -71,10 +71,12 @@ than one web app can be setup and served by it.
 ## Configuration
 
 To add another web app to the virtual servers you will need to:
-  1. edit the `Vagrantfile` and add new synced folder,
-  2. add the domain and docroot of the web app in `variables.yml`
+  1. edit the `Vagrantfile` and add a new synced folder,
+  2. add the domain and docroot of the web app in `variables.yml` by appending
+     to the `domains` array
   3. reload the vagrant configuration with `vagrant reload`,
-  4. provision the server again so that virtual hosts are created,
+  4. provision the server again so that virtual hosts are created with `vagrant
+     provision`,
   5. edit `/etc/hosts` on your local machine and add the new web app domain on
      `127.0.0.1`
 
