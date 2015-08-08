@@ -101,6 +101,6 @@ following sotfware:
 
 This code is developed and maintained by
 [Tassos Koutlas](https://github.com/tassoskoutlas) for the Ioannina FOSS Unit of
-Excellence (ioa-maellak). Pull requests are welcome.
+Excellence ([ioa-maellak](https://github.com/ioa-maellak/)). Pull requests are welcome.
 
 The code is distributed with a EUPL v1.1 open source software license.
