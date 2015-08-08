@@ -1,3 +1,9 @@
+server_admin: admin@example.com
+  
+domains:
+  - domain: mynewapp.local
+    docroot: /var/www/html/mynewapp
+
 db_user: drupal_user
 db_pass: droop4l
 db_name: drupal
