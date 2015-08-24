@@ -70,14 +70,18 @@ than one web app can be setup and served by it.
 
 ## Configuration
 
+The `variables.yml` file contain all variables that can be modified to extend
+the use cases.
+
 To add another web app to the virtual servers you will need to:
-  1. edit the `Vagrantfile` and add a new synced folder,
-  2. add the domain and docroot of the web app in `variables.yml` by appending
-     to the `domains` array
-  3. reload the vagrant configuration with `vagrant reload`,
-  4. provision the server again so that virtual hosts are created with `vagrant
+  1. Edit `Vagrantfile` and add a new synced folder,
+  2. Add the domain and docroot in `domains` array in `variables.yml`,
+  3. Add database user, pass and database name in `database_user` array in
+     `variables.yml`,
+  3. Reload the vagrant configuration with `vagrant reload`,
+  4. Provision the server again so that virtual hosts are created with `vagrant
      provision`,
-  5. edit `/etc/hosts` on your local machine and add the new web app domain on
+  5. Edit `/etc/hosts` on your local machine and add the new web app domain on
      `127.0.0.1`
 
 Have a look on `generic.vhost.j2` for exact implementation details for the
