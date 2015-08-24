@@ -23,7 +23,7 @@ database_users:
       - drupal
   # Uncomment below
   # - name: group_b
-  #   user: another_mysql_user
+  #   user: mysql_user
   #   pass: another_mysql_user_pass
   #   database_names:
   #     - a_new_database_name
