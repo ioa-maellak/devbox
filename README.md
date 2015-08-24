@@ -111,6 +111,9 @@ in `variables.yml`. Ensure the correct name of the package you are after by
 
 This code is developed and maintained by
 [Tassos Koutlas](https://github.com/tassoskoutlas) for the Ioannina FOSS Unit of
-Excellence ([ioa-maellak](https://github.com/ioa-maellak/)). Pull requests are welcome.
+Excellence ([ioa-maellak](https://github.com/ioa-maellak/)). Pull requests are
+welcome. Read this post on
+[how to use pull requests on github](https://help.github.com/articles/using-pull-requests/).
 
-The code is distributed under the [EUPL v1.1](http://ec.europa.eu/idabc/eupl.html) open source software license.
+The code is distributed under the
+[EUPL v1.1](http://ec.europa.eu/idabc/eupl.html) open source software license.
