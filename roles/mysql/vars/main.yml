@@ -1,0 +1,7 @@
+---
+# Software packages to be installed.
+packages_mysql:
+  - mysql-server
+  - php-mysql
+  - python-mysqldb
+  

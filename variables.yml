@@ -2,14 +2,11 @@
 # Server configuration variables. #
 ###################################
 
-# Sercer settings.
-server_admin: admin@example.com
-
 # Domain settings.
 # Append to the following list an array of {domain, docroot}
 # to add new web apps.
 domains:
-  - { domain: "mynewapp.local", docroot: "/var/www/html/mynewapp" }
+  - { domain: "devbox.local", docroot: "/var/www/html/" }
 
 # Database settings.
 # Add users and databases to MySQL. Add databases to a user by appending
@@ -32,23 +29,5 @@ database_users:
 # Software settings.
 # Append to the following array to add new software packages
 # to the server.
-packages:
-  - apache2
-  - apache2-mpm-prefork
-  - apache2-utils
-  - php5
-  - libapache2-mod-php5
-  - php5-mcrypt
-  - php5-cli
-  - php5-common
-  - php5-curl
-  - php5-dev
-  - php5-fpm
-  - php5-gd
-  - mysql-server
-  - libapache2-mod-auth-mysql
-  - php5-mysql
-  - python-mysqldb
-  - git
-  - tmux
+
   

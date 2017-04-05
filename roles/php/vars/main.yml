@@ -1,0 +1,12 @@
+---
+# Software packages to be installed.
+packages_php:
+  - php
+  - php-mcrypt
+  - php-cli
+  - php-common
+  - php-curl
+  - php-dev
+  - php-fpm
+  - php-gd
+  - php-zip

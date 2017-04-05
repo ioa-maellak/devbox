@@ -1,0 +1,67 @@
+---
+
+- name: Install MySQL packages
+  become: yes
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages_mysql }}"
+  notify: restart mysql
+
+# Check if user my.cnf exists and if it does register this variable 
+# so MySQL honours the my.cnf and does not try to update the root 
+# password.
+- name: Check if MySQL root password needs updating
+  stat:
+    path: "~/.my.cnf"
+  register: update_mysql_root_pass
+
+- name: Create MySQL root password
+  command: /usr/bin/openssl rand -base64 16
+  register: mysql_root_pass
+  when: update_mysql_root_pass is not defined
+
+# Uncomment the value below to see what is the root password that is
+# generated. This password is written in ~/.my.cnf so you can have a
+# look there after the provisioning of the server.
+# - debug: var=mysql_root_pass
+
+- name: Update MySQL root password
+  become: yes
+  mysql_user:
+    name: "root"
+    host: "{{ item }}"
+    password: "{{ mysql_root_pass.stdout }}"
+    state: present
+  with_items:
+      - 127.0.0.1
+      - ::1
+      - localhost
+  notify: restart mysql
+  when: update_mysql_root_pass is not defined
+
+- name: Move my.cnf on ~
+  template:
+    src: my.cnf.j2
+    dest: "~/.my.cnf"
+    mode: 0600
+  args:
+    creates: "~/.my.cnf"
+
+- name: Create database for drupal development
+  mysql_db: name="{{ item.1 }}" state=present
+  with_subelements:
+    - database_users
+    - database_names
+
+- name: Add database users and privileges
+  mysql_user:
+    name: "{{ item.0.user }}"
+    host: localhost
+    password: "{{ item.0.pass }}"
+    priv: "{{ item.1 }}.*:ALL,GRANT"
+    state: present
+    append_privs: yes
+  with_subelements:
+    - database_users
+    - database_names
