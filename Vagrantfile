@@ -18,6 +18,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     vb.name = "devbox"
     vb.customize ["modifyvm", :id, "--memory", "1024"]
   end
+
+  # Workaround for ubuntu/xenial not having /usr/bin/python
+  config.vm.provision "shell" do |shell|
+    shell.inline = "if [[ ! -f /usr/bin/python ]]; then sudo ln -s /usr/bin/python3 /usr/bin/python; fi"
+  end
   
   # Provision with Ansible
   config.vm.provision "ansible" do |ansible|
