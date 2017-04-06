@@ -1,6 +1,6 @@
 ---
 
-- name: Install Apache packages
+- name: Install packages
   become: yes
   apt: 
     name: "{{ item }}"
@@ -15,6 +15,9 @@
     state: present
   notify: restart apache
 
+# TODO: Add configuration to harden the server (signature off, etc)
+
+# TODO: Move this to a project specific role.
 - name: Create docroots
   become: yes
   file:
