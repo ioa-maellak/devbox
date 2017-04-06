@@ -1,5 +1,14 @@
 ---
 
+- name: Check if ~/.my.cnf exists
+  stat:
+    path: "~/.my.cnf"
+  register: mysql_pass
+
+# # Use the code below for debuging.
+# - debug:
+#     var: mysql_pass.stat.exists
+
 - name: Install MySQL packages
   become: yes
   apt: 
@@ -8,23 +17,10 @@
   with_items: "{{ packages_mysql }}"
   notify: restart mysql
 
-# Check if user my.cnf exists and if it does register this variable 
-# so MySQL honours the my.cnf and does not try to update the root 
-# password.
-- name: Check if MySQL root password needs updating
-  stat:
-    path: "~/.my.cnf"
-  register: update_mysql_root_pass
-
 - name: Create MySQL root password
   command: /usr/bin/openssl rand -base64 16
   register: mysql_root_pass
-  when: update_mysql_root_pass is not defined
-
-# Uncomment the value below to see what is the root password that is
-# generated. This password is written in ~/.my.cnf so you can have a
-# look there after the provisioning of the server.
-# - debug: var=mysql_root_pass
+  when: not mysql_pass.stat.exists
 
 - name: Update MySQL root password
   become: yes
@@ -37,22 +33,31 @@
       - 127.0.0.1
       - ::1
       - localhost
+  when: not mysql_pass.stat.exists
   notify: restart mysql
-  when: update_mysql_root_pass is not defined
 
-- name: Move my.cnf on ~
+- name: Create ~/.my.cnf
   template:
     src: my.cnf.j2
     dest: "~/.my.cnf"
     mode: 0600
-  args:
-    creates: "~/.my.cnf"
+  when: not mysql_pass.stat.exists
+
+# # Debug with_subelements on the below.
+# - name: Debug adding databases
+#   debug:
+#     msg: "User: {{ item.0.user }}, Pass: {{ item.0.pass }}, DB: {{ item.1}}"
+#   with_subelements:
+#     - "{{ database_users }}"
+#     - databases_names
 
 - name: Create database for drupal development
-  mysql_db: name="{{ item.1 }}" state=present
+  mysql_db: 
+    name: "{{ item.1 }}"
+    state: present
   with_subelements:
-    - database_users
-    - database_names
+    - "{{ database_users }}"
+    - databases_names
 
 - name: Add database users and privileges
   mysql_user:
@@ -63,5 +68,5 @@
     state: present
     append_privs: yes
   with_subelements:
-    - database_users
-    - database_names
+    - "{{ database_users }}"
+    - databases_names

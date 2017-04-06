@@ -1,4 +1,8 @@
 ---
+
+# MySQL user
+mysql_user: "root"
+
 # Software packages to be installed.
 packages_mysql:
   - mysql-server

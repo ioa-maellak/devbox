@@ -5,7 +5,7 @@
 ##########################################
 
 - hosts: all
-  remote_user: ubuntu
+  remote_user: "{{ remote_user }}"
   vars_files:
     - variables.yml
   gather_facts: yes
@@ -13,6 +13,5 @@
   roles:
     - common
     - php
-    # - apache
-    # - mysql
-
+    - apache
+    - mysql
