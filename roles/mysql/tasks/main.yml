@@ -1,0 +1,72 @@
+---
+
+- name: Check if ~/.my.cnf exists
+  stat:
+    path: "~/.my.cnf"
+  register: mysql_pass
+
+# # Use the code below for debuging.
+# - debug:
+#     var: mysql_pass.stat.exists
+
+- name: Install MySQL packages
+  become: yes
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages_mysql }}"
+  notify: restart mysql
+
+- name: Create MySQL root password
+  command: /usr/bin/openssl rand -base64 16
+  register: mysql_root_pass
+  when: not mysql_pass.stat.exists
+
+- name: Update MySQL root password
+  become: yes
+  mysql_user:
+    name: "root"
+    host: "{{ item }}"
+    password: "{{ mysql_root_pass.stdout }}"
+    state: present
+  with_items:
+      - 127.0.0.1
+      - ::1
+      - localhost
+  when: not mysql_pass.stat.exists
+  notify: restart mysql
+
+- name: Create ~/.my.cnf
+  template:
+    src: my.cnf.j2
+    dest: "~/.my.cnf"
+    mode: 0600
+  when: not mysql_pass.stat.exists
+
+# # Debug with_subelements on the below.
+# - name: Debug adding databases
+#   debug:
+#     msg: "User: {{ item.0.user }}, Pass: {{ item.0.pass }}, DB: {{ item.1}}"
+#   with_subelements:
+#     - "{{ database_users }}"
+#     - databases_names
+
+- name: Create database for drupal development
+  mysql_db: 
+    name: "{{ item.1 }}"
+    state: present
+  with_subelements:
+    - "{{ database_users }}"
+    - databases_names
+
+- name: Add database users and privileges
+  mysql_user:
+    name: "{{ item.0.user }}"
+    host: localhost
+    password: "{{ item.0.pass }}"
+    priv: "{{ item.1 }}.*:ALL,GRANT"
+    state: present
+    append_privs: yes
+  with_subelements:
+    - "{{ database_users }}"
+    - databases_names

@@ -1,54 +1,28 @@
 ###################################
-# Server configuration variables. #
+# Configuration variables. #
 ###################################
 
-# Sercer settings.
-server_admin: admin@example.com
+# Remote user name to be used on the machine
+remote_user: ubuntu
 
 # Domain settings.
 # Append to the following list an array of {domain, docroot}
 # to add new web apps.
 domains:
-  - { domain: "mynewapp.local", docroot: "/var/www/html/mynewapp" }
+  - { domain: "devbox.local", docroot: "/var/www/html/" }
 
 # Database settings.
 # Add users and databases to MySQL. Add databases to a user by appending
 # values on the databases_names list. Add more users by adding another
 # group by unommenting group_b below.
 database_users:
-  - name: group_a
-    user: drupal_user
-    pass: droop4l
-    database_names:
-      - drupal
-  # Uncomment below
-  # - name: group_b
-  #   user: mysql_user
-  #   pass: another_mysql_user_pass
-  #   database_names:
-  #     - a_new_database_name
-  #     - another_database_name
-  
-# Software settings.
-# Append to the following array to add new software packages
-# to the server.
-packages:
-  - apache2
-  - apache2-mpm-prefork
-  - apache2-utils
-  - php5
-  - libapache2-mod-php5
-  - php5-mcrypt
-  - php5-cli
-  - php5-common
-  - php5-curl
-  - php5-dev
-  - php5-fpm
-  - php5-gd
-  - mysql-server
-  - libapache2-mod-auth-mysql
-  - php5-mysql
-  - python-mysqldb
-  - git
-  - tmux
-  
+  - user: "drupal_user"
+    pass: "droop4l"
+    databases_names:
+      - "drupal"
+  # # Uncomment below
+  # - user: "mysql_user"
+  #   pass: "another_mysql_user_pass"
+  #   database_name:
+  #     - "a_new_database_name"
+  #     - "another_database_name"

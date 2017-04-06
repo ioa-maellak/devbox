@@ -1,0 +1,27 @@
+---
+
+- name: Update apt
+  become: yes
+  apt: 
+    update_cache: yes 
+    cache_valid_time: 8400
+  
+- name: Install utilities
+  become: yes
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages_utils }}"
+
+- name: Create ~/bin directory
+  file:
+    path: "~/bin"
+    state: directory
+    mode: 0775
+
+- name: Add ~/bin to PATH
+  lineinfile:
+    dest: "~/.profile"
+    regexp: "PATH"
+    line: "PATH=\"$HOME/bin:$PATH\""
+    backup: yes
