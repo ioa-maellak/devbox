@@ -17,8 +17,6 @@
   file:
     path: "~/bin"
     state: directory
-    owner: "{{ remote_user }}"
-    group: "{{ remote_user }}"
     mode: 0775
 
 - name: Add ~/bin to PATH
