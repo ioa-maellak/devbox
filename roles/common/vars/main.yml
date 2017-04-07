@@ -1,5 +1,13 @@
 ---
 
+##################################
+# Configuration for common role. #
+##################################
+
+# package_utils
+#
+# Append to this list the software that should be included in devbox.
+
 packages_utils:
   - git
   - tmux
