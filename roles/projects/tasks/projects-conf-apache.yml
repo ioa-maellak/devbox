@@ -1,0 +1,29 @@
+---
+
+- name: Create project docroots
+  become: yes
+  file:
+    path: "{{ item.docroot }}"
+    group: www-data
+    mode: 0775
+    state: directory
+  with_items: "{{ projects }}"
+
+- name: Create project vhosts
+  become: yes
+  template:
+    src: "generic.vhost.j2"
+    dest: "/etc/apache2/sites-available/{{ item.domain }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ projects }}"
+  notify: restart apache
+
+- name: Enable project vhosts
+  become: yes
+  command: a2ensite "{{ item.domain }}"
+  args:
+    creates: "/etc/apache2/sites-enabled/{{ item.domain }}.conf"
+  with_items: "{{ projects }}"
+  notify: restart apache
