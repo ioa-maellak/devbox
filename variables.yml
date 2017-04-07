@@ -19,4 +19,5 @@ remote_user: ubuntu
 #    skipped)
 #  tech
 projects:
-  - { domain: "devbox.local", docroot: "/home/{{ remote_user }}/projects/test", db_user: "", db_pass: "", db_name: "", tech: "" }
+  - { domain: "devbox.local", docroot: "/home/{{ remote_user }}/projects/test", db_user: "tassos", db_pass: "tassos", db_name: "tassos", tech: "" }
+  #- { domain: "d8.demo", docroot: "/home/{{ remote_user }}/projects/DEMO", db_user: "", db_pass: "", db_name: "drupal", tech: "drupal"}

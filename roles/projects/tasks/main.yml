@@ -1,4 +1,4 @@
 ---
 
 - include: projects-conf-apache.yml
-#- include: projects-conf-mysql.yml
+- include: projects-conf-mysql.yml
