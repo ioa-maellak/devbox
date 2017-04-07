@@ -42,31 +42,3 @@
     dest: "~/.my.cnf"
     mode: 0600
   when: not mysql_pass.stat.exists
-
-# # Debug with_subelements on the below.
-# - name: Debug adding databases
-#   debug:
-#     msg: "User: {{ item.0.user }}, Pass: {{ item.0.pass }}, DB: {{ item.1}}"
-#   with_subelements:
-#     - "{{ database_users }}"
-#     - databases_names
-
-- name: Create database for drupal development
-  mysql_db: 
-    name: "{{ item.1 }}"
-    state: present
-  with_subelements:
-    - "{{ database_users }}"
-    - databases_names
-
-- name: Add database users and privileges
-  mysql_user:
-    name: "{{ item.0.user }}"
-    host: localhost
-    password: "{{ item.0.pass }}"
-    priv: "{{ item.1 }}.*:ALL,GRANT"
-    state: present
-    append_privs: yes
-  with_subelements:
-    - "{{ database_users }}"
-    - databases_names
