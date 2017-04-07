@@ -1,0 +1,17 @@
+---
+
+- name: Install composer
+  shell: "curl -sS https://getcomposer.org/installer | php"
+  args:
+    creates: "~/bin/composer"
+
+- name: Move composer to ~/bin
+  shell: "mv ~/composer.phar ~/bin/composer"
+  args:
+    creates: "~/bin/composer"
+
+- name: Make composer executable
+  file: 
+    path: "~/bin/composer"
+    mode: a+x
+    state: file
