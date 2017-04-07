@@ -1,0 +1,48 @@
+---
+
+- name: Create project docroots
+  become: yes
+  file:
+    path: "{{ item.docroot }}"
+    group: www-data
+    mode: 0775
+    state: directory
+  with_items: "{{ projects }}"
+
+- name: Create project vhosts
+  become: yes
+  template:
+    src: "generic.vhost.j2"
+    dest: "/etc/apache2/sites-available/{{ item.domain }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ projects }}"
+  notify: restart apache
+
+- name: Enable project vhosts
+  become: yes
+  command: a2ensite "{{ item.domain }}"
+  args:
+    creates: "/etc/apache2/sites-enabled/{{ item.domain }}.conf"
+  with_items: "{{ projects }}"
+  notify: restart apache
+
+#- name: Create project databases
+  #mysql_db: 
+    #name: "{{ item.db_name }}"
+    #state: present
+  #with_items:
+    #- "{{ projects }}"
+
+#- name: Add users and privileges to project databases
+  #mysql_user:
+    #name: "{{ item.0.user }}"
+    #host: localhost
+    #password: "{{ item.0.pass }}"
+    #priv: "{{ item.1 }}.*:ALL,GRANT"
+    #state: present
+    #append_privs: yes
+  #with_subelements:
+    #- "{{ database_users }}"
+    #- databases_names
