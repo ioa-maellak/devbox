@@ -1,0 +1,20 @@
+---
+
+- name: Create project databases
+  mysql_db: 
+    name: "{{ item.db_name }}"
+    state: present
+  with_items:
+    - "{{ projects }}"
+
+- name: Add users and privileges to project databases
+  mysql_user:
+    name: "{{ item.db_user }}"
+    host: localhost
+    password: "{{ item.db_pass }}"
+    priv: "{{ item.db_name }}.*:ALL,GRANT"
+    state: present
+    append_privs: yes
+  with_items:
+    - "{{ projects }}"
+  when: item.db_user is defined

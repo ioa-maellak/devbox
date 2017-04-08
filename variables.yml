@@ -1,28 +1,23 @@
-###################################
+############################
 # Configuration variables. #
-###################################
+############################
 
-# Remote user name to be used on the machine
+# Remote user name used in devbox
 remote_user: ubuntu
 
-# Domain settings.
-# Append to the following list an array of {domain, docroot}
-# to add new web apps.
-domains:
-  - { domain: "devbox.local", docroot: "/var/www/html/" }
-
-# Database settings.
-# Add users and databases to MySQL. Add databases to a user by appending
-# values on the databases_names list. Add more users by adding another
-# group by unommenting group_b below.
-database_users:
-  - user: "drupal_user"
-    pass: "droop4l"
-    databases_names:
-      - "drupal"
-  # # Uncomment below
-  # - user: "mysql_user"
-  #   pass: "another_mysql_user_pass"
-  #   database_name:
-  #     - "a_new_database_name"
-  #     - "another_database_name"
+# projects
+# 
+# Dictionary to add projects.
+# Parameters:
+#  domain - string - URL to be used from host machine to access project.
+#  docroot - string - the location of the project in devbox. It's syntax 
+#    contains {{ remote_user }} to make it box indepedent.
+#  db_user - string - the name of the database user to be used (empty for root)
+#  db_pass - string - the passwrd of the database user to be used (empty for 
+#    root)
+#  db_name - string - the database name to be used (if empty database is 
+#    skipped)
+#  tech
+projects:
+  - { domain: "devbox.local", docroot: "/home/{{ remote_user }}/projects/test", db_user: "tassos", db_pass: "tassos", db_name: "tassos", tech: "" }
+  #- { domain: "d8.demo", docroot: "/home/{{ remote_user }}/projects/DEMO", db_user: "", db_pass: "", db_name: "drupal", tech: "drupal"}

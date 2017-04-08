@@ -6,13 +6,12 @@
     creates: "~/bin/composer"
 
 - name: Move composer to ~/bin
-  shell: "mv composer.phar ~/bin/composer"
+  shell: "mv ~/composer.phar ~/bin/composer"
   args:
     creates: "~/bin/composer"
 
-# - name: Install drush
-#   become_user: ubuntu
-#   shell: "~/bin/composer require drush/drush"
-#   args:
-#     creates: "~/.composer/vendor/bin/drush"
-
+- name: Make composer executable
+  file: 
+    path: "~/bin/composer"
+    mode: a+x
+    state: file

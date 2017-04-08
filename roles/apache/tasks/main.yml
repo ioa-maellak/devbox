@@ -16,33 +16,3 @@
   notify: restart apache
 
 # TODO: Add configuration to harden the server (signature off, etc)
-
-# TODO: Move this to a project specific role.
-- name: Create docroots
-  become: yes
-  file:
-    path: "{{ item.docroot }}"
-    owner: www-data
-    group: www-data
-    mode: 0775
-    state: directory
-  with_items: "{{ domains }}"
-
-- name: Create vhosts
-  become: yes
-  template:
-    src: "generic.vhost.j2"
-    dest: "/etc/apache2/sites-available/{{ item.domain }}.conf"
-    owner: root
-    group: root
-    mode: 0644
-  with_items: "{{ domains }}"
-  notify: restart apache
-
-- name: Enable vhosts
-  become: yes
-  command: a2ensite "{{ item.domain }}"
-  args:
-    creates: "/etc/apache2/sites-enabled/{{ item.domain }}.conf"
-  with_items: "{{ domains }}"
-  notify: restart apache
