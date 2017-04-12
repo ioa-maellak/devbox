@@ -3,7 +3,7 @@
 - name: Create project docroots
   become: yes
   file:
-    path: "{{ item.docroot }}"
+    path: "{{ item.project }}/{{ item.docroot }}"
     group: www-data
     mode: 0775
     state: directory

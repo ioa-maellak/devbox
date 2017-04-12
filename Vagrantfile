@@ -10,13 +10,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "devbox" do |devbox|
     devbox.vm.box = "ubuntu/xenial64"
     devbox.vm.network "forwarded_port", guest: 80, host: 8080
-    devbox.vm.synced_folder "~/projects", "/home/ubuntu/projects"
+    devbox.vm.synced_folder "~/projects", "/home/ubuntu/projects",
+      owner: "ubuntu", group: "www-data", mount_options: ["dmode=775,fmode=664"]
   end
 
   # Virtualbox parameters
   config.vm.provider "virtualbox" do |vb|
     vb.name = "devbox"
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+    vb.cpus = 2
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    vb.customize ["storagectl", :id, "--name", "SCSI", "--hostiocache", "on"]
   end
 
   # Workaround for ubuntu/xenial not having /usr/bin/python

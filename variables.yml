@@ -5,6 +5,9 @@
 # Remote user name used in devbox
 remote_user: ubuntu
 
+# Location of the projects root
+projects_root: "/home/{{ remote_user }}/projects"
+
 # projects
 # 
 # Dictionary to add projects.
@@ -19,5 +22,5 @@ remote_user: ubuntu
 #    skipped)
 #  tech
 projects:
-  - { domain: "devbox.local", docroot: "/home/{{ remote_user }}/projects/test", db_user: "tassos", db_pass: "tassos", db_name: "tassos", tech: "" }
-  #- { domain: "d8.demo", docroot: "/home/{{ remote_user }}/projects/DEMO", db_user: "", db_pass: "", db_name: "drupal", tech: "drupal"}
+  - { domain: "devbox.local", project: "{{ projects_root}}/test", docroot: "", db_user: "tassos", db_pass: "tassos", db_name: "tassos", tech: "" }
+  - { domain: "d8.demo", project: "{{ projects_root }}/D8/00-DEMO", docroot: "tech/web", db_user: "", db_pass: "", db_name: "d8demo", tech: "drupal"}
