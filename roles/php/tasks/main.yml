@@ -6,5 +6,6 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ packages_php }}"
-  
-- include: composer.yml
+
+- include: php-xdebug.yml
+- include: php-composer.yml
