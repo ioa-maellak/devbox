@@ -1,6 +1,6 @@
 ---
 # PHP configuration directory.
-php_config_dir: "/etc/php/7.0"
+php_config_dir: "/etc/php/7.0/"
 
 # PHP packages to be installed.
 packages_php:
@@ -14,4 +14,4 @@ packages_php:
   - php7.0-gd
   - php7.0-zip
   - php7.0-mbstring
-  - php7.0-xdebug
+  - php-xdebug
