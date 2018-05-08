@@ -6,6 +6,7 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ packages_php }}"
+  notify: restart apache
 
 - include: php-xdebug.yml
 - include: php-composer.yml

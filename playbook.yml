@@ -12,7 +12,7 @@
 
   roles:
     - common
-    - php
     - apache
+    - php
     - mysql
     - projects

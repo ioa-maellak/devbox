@@ -15,17 +15,4 @@
     state: present
   notify: restart apache
 
-- name: Remove default Apache page
-  become: yes
-  file:
-    path: "/var/www/html/index.html"
-    state: "absent"
-
-- name: Enabled phpinfo() page
-  become: yes
-  copy:
-    src: "index.php"
-    dest: "/var/www/html/index.php"
-    force: no
-
 # TODO: Add configuration to harden the server (signature off, etc)
