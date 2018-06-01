@@ -5,10 +5,10 @@
 # Remote user name used in devbox
 remote_user: ubuntu
 
-# Location of the projects root
-projects_root: "/home/{{ remote_user }}/projects"
+# RSA key location
+rsa_key: "~/.ssh/id_rsa"
 
-# Configuration roles
+# Configuration of server stack
 #
 # Configuration of devbox functionality.
 #
@@ -20,6 +20,9 @@ config_roles:
   - php
   - mysql
   - projects
+
+# Projects root
+projects_root: "/home/{{ remote_user }}/projects"
 
 # Projects
 # 
@@ -33,7 +36,16 @@ config_roles:
 #    root)
 #  db_name - string - the database name to be used (if empty database is 
 #    skipped)
-#  tech
+#  tech - string - the technology used in the project (hugo, drupal, symfony)
 projects:
   - { domain: "devbox.local", project: "{{ projects_root}}/test", docroot: "", db_user: "tassos", db_pass: "tassos", db_name: "tassos", tech: "" }
   - { domain: "d8.demo", project: "{{ projects_root }}/D8/00-DEMO", docroot: "tech/web", db_user: "", db_pass: "", db_name: "d8demo", tech: "drupal"}
+
+## TODO
+  
+# Additional packages
+#
+# Add additional packages in the variable below to be included in the server,
+additional_packages:
+  # - uncomment here 
+

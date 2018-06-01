@@ -1,7 +1,5 @@
 ---
 
-# TODO #1 Add id_rsa to box 
-
 - name: Update apt
   become: yes
   apt: 
@@ -27,3 +25,21 @@
     regexp: "PATH"
     line: "PATH=\"$HOME/bin:$PATH\""
     backup: yes
+
+- name: Add user RSA key
+  copy:
+    src: "{{ rsa_key }}"
+    dest: "~/.ssh/id_rsa"
+    mode: 0400
+
+- name: Add SSH config
+  copy:
+    src: ssh_config
+    dest: "~/.ssh/config"
+    backup: yes
+
+- name: Add Github fingerprint to known_hosts file
+  shell: "ssh-keyscan -H github.com >> ~/.ssh/known_hosts"
+  args:
+    creates: "~/.ssh/known_hosts"
+
