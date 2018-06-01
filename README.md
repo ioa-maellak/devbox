@@ -37,7 +37,19 @@ To create the guest server and automatically configure it run the following
 command:
 
 ```
-git clone git@github.com:ioa-maellak/devbox.git && cd devbox && vagrant up
+git clone git@github.com:ioa-maellak/devbox.git && cd devbox
+```
+
+Next create a `config.yml` to configure your server like so:
+
+```
+cp default.config.yml config.yml
+```
+
+Finally run Vagrant:
+
+```
+vagrant up
 ```
 
 Vagrant will first download Ubuntu (it takes a few minutes the first time) and

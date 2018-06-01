@@ -7,7 +7,7 @@
 - hosts: all
   remote_user: "{{ remote_user }}"
   vars_files:
-    - variables.yml
+    - config.yml
   gather_facts: yes
 
   roles:
