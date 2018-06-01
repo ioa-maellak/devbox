@@ -8,7 +8,20 @@ remote_user: ubuntu
 # Location of the projects root
 projects_root: "/home/{{ remote_user }}/projects"
 
-# projects
+# Configuration roles
+#
+# Configuration of devbox functionality.
+#
+# Comment out the parameters that are not needed to ensure that roles are not
+# included in the project.
+#
+config_roles:
+  - apache
+  - php
+  - mysql
+  - projects
+
+# Projects
 # 
 # Dictionary to add projects.
 # Parameters:
