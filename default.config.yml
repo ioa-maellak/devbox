@@ -1,0 +1,66 @@
+############################
+# Configuration variables. #
+############################
+
+# Remote user name used in devbox
+remote_user: ubuntu
+
+# RSA key location
+rsa_key: "~/.ssh/id_rsa"
+
+# Configuration of server stack
+#
+# Configuration of devbox functionality.
+#
+# Comment out the parameters that are not needed to ensure that roles are not
+# included in the project.
+#
+config_roles:
+  - apache
+  - php
+  - mysql
+  - projects
+
+# Projects root
+projects_root: "/home/{{ remote_user }}/projects"
+
+# Projects
+# 
+# Dictionary to add projects.
+# Parameters:
+#  domain - string - URL to be used from host machine to access project.
+#  docroot - string - the location of the project in devbox. It's syntax 
+#    contains {{ remote_user }} to make it box indepedent.
+#  db_user - string - the name of the database user to be used (empty for root)
+#  db_pass - string - the passwrd of the database user to be used (empty for 
+#    root)
+#  db_name - string - the database name to be used (if empty database is 
+#    skipped)
+#  tech - string - the technology used in the project (hugo, drupal, symfony)
+
+projects:
+
+  - domain: "d8.demo"
+    project: "{{ projects_root }}/D8/00-DEMO"
+    docroot: "tech/web"
+    db_user: ""
+    db_pass: ""
+    db_name: "d8demo"
+    tech: "drupal"
+
+  # - domain: ""
+  #   project: ""
+  #   docroot: ""
+  #   db_user: ""
+  #   db_pass: ""
+  #   db_name: ""
+  #   tech: ""
+
+## TODO
+  
+# Additional packages
+#
+# Add additional packages in the variable below to be included in the server,
+additional_packages:
+  # - uncomment here 
+

@@ -1,13 +1,18 @@
 ---
-# Software packages to be installed.
+# PHP configuration directory.
+php_config_dir: "/etc/php/7.0/"
+
+# PHP packages to be installed.
 packages_php:
-  - php
-  - php-mcrypt
-  - php-cli
-  - php-common
-  - php-curl
-  - php-dev
-  - php-fpm
-  - php-gd
-  - php-zip
-  - php-mbstring
+  - php7.0
+  - php7.0-mcrypt
+  - php7.0-cli
+  - php7.0-common
+  - php7.0-curl
+  - php7.0-dev
+  - php7.0-fpm
+  - php7.0-gd
+  - php7.0-zip
+  - php7.0-mbstring
+  - php-xdebug
+  - libapache2-mod-php

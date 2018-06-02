@@ -6,4 +6,3 @@ server_admin: admin@example.com
 packages_apache:
   - apache2
   - apache2-utils
-  - libapache2-mod-php

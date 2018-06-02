@@ -7,12 +7,17 @@
 - hosts: all
   remote_user: "{{ remote_user }}"
   vars_files:
-    - variables.yml
+    - config.yml
   gather_facts: yes
 
   roles:
     - common
-    - php
-    - apache
-    - mysql
-    - projects
+  
+  tasks:
+  - name: Include roles
+    include_role:
+      name: "{{ roles }}"
+    with_items:
+      - "{{ config_roles }}"
+    loop_control:
+      loop_var: "roles"
