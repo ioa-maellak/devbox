@@ -2,51 +2,37 @@
 
 ## Prerequisites
 
-This code provides a virtual devevelopment box (ubuntu/xenial64) on your local
-machine automatically configured as a LAMP server. Using the LAMP stack you can
-deploy projects without worrying about setting up your computer as a development
-environment.
+Devbox is a virtual devevelopment box for PHP and JavaScruipt development
+(including frameworks like Hugo, Symfony, WordPress and Drupal). Using the LAMP
+stack provided you can start development without worrying about setting up your
+computer as a development environment.
 
-Devbox works best with the following software versions:
+Devbox works with the following software:
 
   - Vagrant >= 2.1.1
   - Ansible >= 2.5
   - VirtualBox
   - Ubuntu Xenial 16.04
 
-On Ubuntu hosts these packages are in official repositories and you can
-install them the usual way:
-
-```
-sudo apt-get install vagrant ansible virtualbox -y
-```
-
-Bare in mind that you might need to add additional PPA repositories to get
-specific versions of the packages you need. For Mac OS X hosts see how to
-install [homebrew](http://brew.sh/).
-
-For windows hosts the software is available and there are
-[guides online for getting vagrant, ansible and virualbox working](https://www.jeffgeerling.com/blog/2017/using-ansible-through-windows-10s-subsystem-linux). Consider
-however using an operating system that is friendlier for developemnt such as
-[Ubuntu](http://www.ubuntu.com/download/desktop) as it will make your life
-easier in other aspects of development.
+Devbox assumes that projects are developed with Git and requires a valid RSA key
+from the local user which has been added in Github.
 
 ## Usage
 
-To create the guest server and automatically configure it run the following
-command:
+Get devbox in your local machine:
 
 ```
 git clone git@github.com:ioa-maellak/devbox.git && cd devbox
 ```
 
-Next create a `config.yml` to configure your server like so:
+Create the configuration file to configure the development environment:
 
 ```
 cp default.config.yml config.yml
 ```
 
-Finally run Vagrant:
+Once done editing `config.yml` run Vagrant to create the development
+environment:
 
 ```
 vagrant up
@@ -58,7 +44,7 @@ You can login to the devbox with the following command:
 vagrant ssh
 ```
 
-Happy coding!
+Happy coding! See below for configuration parameters.
 
 ## Configuration
 
