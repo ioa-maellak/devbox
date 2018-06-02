@@ -20,8 +20,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create devbox with vagrant parameters
   config.vm.define "devbox" do |devbox|
     devbox.vm.box = "ubuntu/xenial64"
-    config.vm.hostname = "dev.box"
+    devbox.vm.hostname = "dev.box"
     devbox.vm.network "private_network", ip: "10.10.10.10"
+    devbox.vm.network "forwarded_port", guest: "80", host: "8000"
     devbox.vm.synced_folder "~/projects", "/home/ubuntu/projects",
       owner: "ubuntu", group: "www-data", mount_options: ["dmode=775,fmode=664"]
   end
