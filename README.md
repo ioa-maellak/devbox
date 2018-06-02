@@ -152,17 +152,17 @@ vagrant help
 
 ### Accessing projects
 
-First, override DNS to point to the domain of your project (e.g. domain is set
-to `myapp.local`). Add the folloring entry in your `/etc/hosts` file:
+Devbox listens to a private network with IP set to 10.10.10.10. Add an entry per
+project in your `/etc/hosts` file:
 
 ```
-127.0.0.1    myapp.local
+10.10.10.10    PROJECT_DOMAIN
 ```
 
 Then point your browser to the domain in port 8000:
 
 ```
-http://myapp.local:8080
+http://PROJECT_DOMAIN
 ```
 
 You should see the homepage of your project.
